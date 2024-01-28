@@ -20,10 +20,10 @@ def string_to_time(string):
 
 
 def build_report():
-    result_abbreviations = []
+    result_abbreviations = {}
     with open(abbreviations_file, 'r') as abbreviations:
         for text in abbreviations:
-            result_abbreviations.append(abbreviations_to_dict(text))
+            result_abbreviations.update(abbreviations_to_dict(text))
 
     result_time_dict = {}
     start_dict = {}
@@ -42,13 +42,19 @@ def build_report():
         else:
             result_time_dict[key] = start_dict[key] - end_dict[key]
 
-    sorted_time_result = sorted(result_time_dict.items(), key=lambda item: item[1])
+    sorted_time_result = dict(sorted(result_time_dict.items(), key=lambda item: item[1]))
     return result_abbreviations, sorted_time_result
 
 
 def print_report():
-    pass
+    result_abbreviations, sorted_time_result = build_report()
+    number = 0
+    for key in sorted_time_result:
+        number += 1
+        print(f"{number}.\t {result_abbreviations[key]} | {sorted_time_result[key]}")
+        if number == 15:
+            print(67 * '*')
 
 
 if __name__ == '__main__':
-    build_report()
+    print_report()
