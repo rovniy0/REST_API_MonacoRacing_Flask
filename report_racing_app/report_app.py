@@ -1,4 +1,5 @@
 
+import re
 from datetime import datetime
 from collections import OrderedDict
 
@@ -8,9 +9,11 @@ end_file = 'end.log'
 
 
 def abbreviations_to_dict(text):
-    parts = text.strip().split('_')
-    key, value = parts[0], f'{parts[1]} | {parts[2]}'
-    return {key: value}
+    match = re.match(r'(\w+)_(.+)_([^_]+)', text.strip())
+    if match:
+        key = match.group(1)
+        value = f'{match.group(2)} | {match.group(3)}'
+        return {key: value}
 
 
 def string_to_time(string):
