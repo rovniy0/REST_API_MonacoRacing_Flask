@@ -1,6 +1,6 @@
 
 import argparse
-from report_app import print_report
+from report import print_report
 
 
 def main():
