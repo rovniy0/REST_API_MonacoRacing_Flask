@@ -33,28 +33,19 @@ class TestReportRacingApp(TestCase):
         self.assertEqual(result_abbreviations, expected_abbreviations)
         self.assertEqual(sorted_time_result, expected_time_result)
 
-    @patch('builtins.print')
-    def test_print_report(self, mock_print):
-        path = "/data_files"
-        with patch('report_racing_app.build_report',
-                   return_value=({'SVF': 'Sebastian Vettel | FERRARI'},
-                                 {'SVF': datetime.timedelta(seconds=64, microseconds=415000)})):
-            print_report(path)
-        mock_print.assert_any_call("1.\t Sebastian Vettel | FERRARI | 0:01:04.415000")
-
     def test_invalid_input(self):
         result = abbreviations_to_dict("invalid_text")
         self.assertIsNone(result)
 
-    @patch('builtins.print')
-    def test_print_report_with_driver(self, mock_print):
+    def test_print_report_with_driver(self):
         path = "/data_files"
         driver = "SVF"
         with patch('report_racing_app.build_report',
                    return_value=({'SVF': 'Sebastian Vettel | FERRARI'},
                                  {'SVF': datetime.timedelta(seconds=64, microseconds=415000)})):
-            print_report(path, driver=driver)
-        mock_print.assert_any_call("Sebastian Vettel | FERRARI | 0:01:04.415000")
+            result = print_report(path, driver=driver)
+        expected_output = ['Sebastian Vettel | FERRARI | 0:01:04.415000']
+        self.assertEqual(result, expected_output)
 
 
 if __name__ == '__main__':
