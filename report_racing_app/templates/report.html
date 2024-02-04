@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Report of Monaco Racing</title>
+    <style>
+      body {
+            display: block;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+            margin-left: 0;
+        }
+      h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        margin-left: auto;
+        margin-right: auto;
+        width: 45%;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Report of Monaco Racing</h1>
+    {% if drivers_report %}
+    <ul>
+        {% for key, value in drivers_report.items() %}
+        <li> <a href="{{ url_for('report_drivers', driver_id=key)}}">{{key}}</a>  {{value}}  </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+      <ul>
+        {% for data in report %}
+        <li> {{data}} </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </body>
+</html>
