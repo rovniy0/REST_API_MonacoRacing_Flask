@@ -11,7 +11,7 @@ def main():
     parser.add_argument('--desc', action='store_true')
     args = parser.parse_args()
     if args.files and args.desc:
-        print_report(args.files, sort='desc')
+        print_report(args.files, order='desc')
     elif args.files and args.driver:
         print_report(args.files, driver=''.join(args.driver))
     else:
