@@ -1,6 +1,6 @@
 
 from flask import Flask, render_template, url_for, request
-from report import print_report
+from report_racing_app import print_report
 
 app = Flask(__name__)
 
