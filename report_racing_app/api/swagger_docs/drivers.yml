@@ -1,6 +1,6 @@
 summary: "Returns information about all riders"
 description: "Returns information about all riders"
-operationId: "GetReport"
+operationId: "GetDrivers"
 produces:
 - "application/xml"
 - "application/json"

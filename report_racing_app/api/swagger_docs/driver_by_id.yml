@@ -1,6 +1,6 @@
 summary: "Returns information about a specific driver"
 description: "Returns information about a specific driver"
-operationId: "GetReport"
+operationId: "GetDriverById"
 produces:
 - "application/xml"
 - "application/json"
