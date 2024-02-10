@@ -1,0 +1,22 @@
+summary: "Returns the total statistics of all drivers"
+description: "Returns the total statistics of all drivers"
+operationId: "GetReport"
+produces:
+- "application/xml"
+- "application/json"
+parameters:
+  - name: "format"
+    in: "query"
+    enum:
+      - 'json'
+      - 'xml'
+    required: false
+  - name: "order"
+    in: "query"
+    enum:
+    - 'asc'
+    - 'desc'
+    required: false
+responses:
+  "200":
+    description: "success"

@@ -1,0 +1,16 @@
+summary: "Returns information about all riders"
+description: "Returns information about all riders"
+operationId: "GetReport"
+produces:
+- "application/xml"
+- "application/json"
+parameters:
+  - name: "format"
+    in: "query"
+    enum:
+      - 'json'
+      - 'xml'
+    required: false
+responses:
+  "200":
+    description: "success"

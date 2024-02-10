@@ -1,0 +1,20 @@
+summary: "Returns information about a specific driver"
+description: "Returns information about a specific driver"
+operationId: "GetReport"
+produces:
+- "application/xml"
+- "application/json"
+parameters:
+  - name: "format"
+    in: "query"
+    enum:
+      - 'json'
+      - 'xml'
+    required: false
+  - name: "driver_id"
+    in: "path"
+    description: "ID of specific driver"
+    required: true
+responses:
+  "200":
+    description: "success"
