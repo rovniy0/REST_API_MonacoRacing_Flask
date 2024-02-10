@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 
 class GetReport(Resource):
+    @swag_from('./swagger_docs/report.yml')
     def get(self):
         request_format = request.args.get('format', type=str)
         request_order = request.args.get('order', type=str)
@@ -27,10 +28,11 @@ class GetReport(Resource):
         if request_format == 'xml':
             xml_report = dicttoxml(report_dict)
             return xml_report.decode()
-        return report_dict
+        return jsonify(report_dict)
 
 
 class GetDrivers(Resource):
+    @swag_from('./swagger_docs/drivers.yml')
     def get(self):
         request_format = request.args.get('format', type=str)
         result_abbreviations, sorted_time_result = build_report('data_files')
@@ -41,6 +43,7 @@ class GetDrivers(Resource):
 
 
 class GetDriverById(Resource):
+    @swag_from('./swagger_docs/driver_by_id.yml')
     def get(self, driver_id):
         request_format = request.args.get('format', type=str)
         result_abbreviations, sorted_time_result = build_report('data_files')
