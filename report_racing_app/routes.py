@@ -9,7 +9,7 @@ api = Api(app)
 swagger = Swagger(app)
 
 api.add_resource(GetReport, '/api/v1/report/')
-api.add_resource(GetDrivers, '/api/v1/report/drivers')
+api.add_resource(GetDrivers, '/api/v1/report/drivers/')
 api.add_resource(GetDriverById, '/api/v1/report/drivers/<string:driver_id>')
 
 if __name__ == '__main__':
