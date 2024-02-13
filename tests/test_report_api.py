@@ -56,7 +56,7 @@ class TestGetDriverByIdApiCases:
         response = client.get('/api/v1/report/drivers/?request_format=some_value')
         assert response.status_code == 400
         response = client.get('/api/v1/report/drivers/AAA')
-        assert response.status_code == 400
+        assert response.status_code == 404
 
     def test_get_driver_by_id_format_json(self, client):
         response = client.get('/api/v1/report/drivers/DRR')

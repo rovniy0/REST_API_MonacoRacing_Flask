@@ -20,3 +20,7 @@ parameters:
 responses:
   "200":
     description: "success"
+    schema:
+      type: object
+  "400":
+    description: "Invalid request_format or request_order value"

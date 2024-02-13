@@ -18,3 +18,9 @@ parameters:
 responses:
   "200":
     description: "success"
+    schema:
+      type: object
+  "400":
+    description: "Invalid request_format value"
+  404:
+    description: "Driver {driver_id} not found"
