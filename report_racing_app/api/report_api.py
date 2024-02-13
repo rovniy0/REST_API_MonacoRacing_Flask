@@ -64,5 +64,5 @@ class GetDriverById(Resource):
         if request_format == 'xml':
             xml_report = dicttoxml(report_dict)
             return xml_report.decode()
-        
+
         return jsonify(report_dict)
