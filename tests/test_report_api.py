@@ -5,12 +5,19 @@ import pytest
 def test_get_report_format_json(client):
     response = client.get('/api/v1/report/')
     assert response.status_code == 200
-    assert (b'{"BHS":{"name":"Brendon Hartley | SCUDERIA TORO ROSSO HONDA","time":"0:01:13'
-            b'.179000"}') in response.data
+    assert (b'{"SVF": {"name": "Sebastian Vettel | '
+            b'FERRARI", "time": "0:01:04.415000"}') in response.data
+
+
+def test_get_report_order_desc(client):
+    response = client.get('/api/v1/report/?request_order=desc')
+    assert response.status_code == 200
+    assert (b'{"LHM": {"name": "Lewis Hamilton |'
+            b' MERCEDES", "time": "0:06:47.540000"}') in response.data
 
 
 def test_get_report_format_xml(client):
-    response = client.get('/api/v1/report/?format=xml')
+    response = client.get('/api/v1/report/?request_format=xml')
     assert response.status_code == 200
     assert (b'"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\" ?><root><SVF type=\\"dict\\"'
             b'><name type=\\"str\\">Sebastian Vettel | FERRARI</name><time type=\\"str\\">'
@@ -24,7 +31,7 @@ def test_get_drivers_format_json(client):
 
 
 def test_get_drivers_format_xml(client):
-    response = client.get('/api/v1/report/drivers/?format=xml')
+    response = client.get('/api/v1/report/drivers/?request_format=xml')
     assert response.status_code == 200
     assert (b'<BHS type=\\"str\\">Brendon Har'
             b'tley | SCUDERIA TORO ROSSO HONDA</BHS>') in response.data
@@ -33,12 +40,12 @@ def test_get_drivers_format_xml(client):
 def test_get_driver_by_id_format_json(client):
     response = client.get('/api/v1/report/drivers/DRR')
     assert response.status_code == 200
-    assert (b'{"DRR": {"name": "Daniel Ricciardo | RED BULL RACING TAG HEUER",'
-            b' "time": "0:02:47.987000"}}\n') in response.data
+    assert (b'{"DRR":{"name":"Daniel Ricciardo | RED BULL RACING TAG HEUER",'
+            b'"time":"0:02:47.987000"}}\n') in response.data
 
 
 def test_get_driver_by_id_format_xml(client):
-    response = client.get('/api/v1/report/drivers/DRR?format=xml')
+    response = client.get('/api/v1/report/drivers/DRR?request_format=xml')
     assert response.status_code == 200
     assert (b'"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\" ?><root><DRR type=\\"dict\\"'
             b'><name type=\\"str\\">Daniel Ricciardo | RED BULL RACING TAG HEUER</name><'
