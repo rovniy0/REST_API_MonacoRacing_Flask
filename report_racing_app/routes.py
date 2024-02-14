@@ -1,27 +1,16 @@
 
-from flask import Flask, render_template, url_for, request
-from report_racing_app import print_report
+from flasgger import Swagger
+from flask import Flask
+from flask_restful import Api
+from report_racing_app.api.report_api import GetReport, GetDrivers, GetDriverById
 
 app = Flask(__name__)
+api = Api(app)
+swagger = Swagger(app)
 
-
-@app.route("/report/")
-def report():
-    order = request.args.get('order')
-    common_statistics = print_report('data_files', order=order,)
-    return render_template('report.html', report=common_statistics)
-
-
-@app.route("/report/drivers/")
-def report_drivers():
-    driver_id = request.args.get('driver_id')
-    if driver_id is None:
-        drivers_statistic = print_report('data_files', driver="full")
-        return render_template('report.html', drivers_report=drivers_statistic)
-    else:
-        driver_statistic = print_report('data_files', driver=driver_id)
-        return render_template('report.html', report=driver_statistic)
-
+api.add_resource(GetReport, '/api/v1/report/')
+api.add_resource(GetDrivers, '/api/v1/report/drivers/')
+api.add_resource(GetDriverById, '/api/v1/report/drivers/<string:driver_id>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

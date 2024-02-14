@@ -1,0 +1,26 @@
+summary: "Returns the total statistics of all drivers"
+description: "Returns the total statistics of all drivers"
+operationId: "GetReport"
+produces:
+- "application/xml"
+- "application/json"
+parameters:
+  - name: "request_format"
+    in: "query"
+    enum:
+      - 'json'
+      - 'xml'
+    required: false
+  - name: "request_order"
+    in: "query"
+    enum:
+    - 'asc'
+    - 'desc'
+    required: false
+responses:
+  "200":
+    description: "success"
+    schema:
+      type: object
+  "400":
+    description: "Invalid request_format or request_order value"
