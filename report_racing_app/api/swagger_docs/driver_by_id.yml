@@ -5,7 +5,7 @@ produces:
 - "application/xml"
 - "application/json"
 parameters:
-  - name: "format"
+  - name: "request_format"
     in: "query"
     enum:
       - 'json'
@@ -23,4 +23,4 @@ responses:
   "400":
     description: "Invalid request_format value"
   404:
-    description: "Driver {driver_id} not found"
+    description: "Driver with id {driver_id} not found"

@@ -73,7 +73,7 @@ class GetDriverById(Resource):
                 "time": time_str
             }
         else:
-            abort(400, f'Driver {driver_id} not found')
+            abort(400, f'Driver with id {driver_id} not found')
 
         if request_format == 'xml':
             xml_report = dicttoxml(report_dict)

@@ -5,13 +5,13 @@ produces:
 - "application/xml"
 - "application/json"
 parameters:
-  - name: "format"
+  - name: "request_format"
     in: "query"
     enum:
       - 'json'
       - 'xml'
     required: false
-  - name: "order"
+  - name: "request_order"
     in: "query"
     enum:
     - 'asc'
