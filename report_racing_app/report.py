@@ -47,8 +47,7 @@ def build_report(path):
         else:
             result_time_dict[key] = start_dict[key] - end_dict[key]
 
-    sorted_time_result = OrderedDict(sorted(result_time_dict.items(), key=lambda item: item[1]))
-    return result_abbreviations, sorted_time_result
+    return result_abbreviations, result_time_dict
 
 
 def print_report(path, order='asc', driver=None):
