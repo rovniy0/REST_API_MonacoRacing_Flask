@@ -12,10 +12,13 @@ class BaseModel(Model):
 
 
 class Driver(BaseModel):
-    id = PrimaryKeyField(unique=True)
+    id = CharField(unique=True)
     name = CharField()
     team = CharField()
-    result_time = TimeField()
+    result_time = CharField()
+
+    class Meta:
+        db_table = 'drivers'
 
 
 Driver.create_table()
