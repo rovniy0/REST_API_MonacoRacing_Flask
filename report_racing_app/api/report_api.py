@@ -1,10 +1,10 @@
 
 from flask import Flask, request, jsonify, abort
 from flask_restful import Resource
-from report_racing_app import build_report
+from report_racing_app.models import Driver
 from flasgger import swag_from
 from dicttoxml import dicttoxml
-from collections import OrderedDict
+from peewee import DoesNotExist
 
 
 app = Flask(__name__)
@@ -19,17 +19,18 @@ class GetReport(Resource):
         if request_order not in ['asc', 'desc'] or request_format not in ['json', 'xml']:
             abort(400, 'Invalid request_format or request_order value')
 
-        result_abbreviations, sorted_time_result = build_report('data_files')
+        drivers = Driver.select()
+        drivers = drivers.order_by(Driver.result_time.asc())
         report_dict = {}
 
         if request_order == 'desc':
-            sorted_time_result = OrderedDict(reversed(sorted_time_result.items()))
+            drivers = drivers.order_by(Driver.result_time.desc())
 
-        for driver_id in sorted_time_result:
-            time_str = str(sorted_time_result[driver_id])
-            report_dict[driver_id] = {
-                "name": result_abbreviations[driver_id],
-                "time": time_str
+        for driver in drivers:
+            report_dict[driver.id] = {
+                'name': driver.name,
+                'team': driver.team,
+                'time': driver.result_time
             }
 
         if request_format == 'xml':
@@ -46,13 +47,19 @@ class GetDrivers(Resource):
         if request_format not in ['json', 'xml']:
             abort(400, 'Invalid request_format value')
 
-        result_abbreviations, sorted_time_result = build_report('data_files')
+        drivers = Driver.select()
+        report_dict = {}
+
+        for driver in drivers:
+            report_dict[driver.id] = {
+                'name': driver.name,
+            }
 
         if request_format == 'xml':
-            xml_report = dicttoxml(result_abbreviations)
+            xml_report = dicttoxml(report_dict)
             return xml_report.decode()
 
-        return jsonify(result_abbreviations)
+        return report_dict
 
 
 class GetDriverById(Resource):
@@ -63,17 +70,16 @@ class GetDriverById(Resource):
         if request_format not in ['json', 'xml']:
             abort(400, 'Invalid request_format value')
 
-        result_abbreviations, sorted_time_result = build_report('data_files')
         report_dict = {}
-
-        if driver_id in result_abbreviations:
-            time_str = str(sorted_time_result[driver_id])
-            report_dict[driver_id] = {
-                "name": result_abbreviations[driver_id],
-                "time": time_str
+        try:
+            driver = Driver.get(Driver.id == driver_id)
+            report_dict[driver.id] = {
+                'name': driver.name,
+                'team': driver.team,
+                'time': driver.result_time
             }
-        else:
-            abort(400, f'Driver with id {driver_id} not found')
+        except DoesNotExist:
+            abort(404, f'Driver with id {driver_id} not found')
 
         if request_format == 'xml':
             xml_report = dicttoxml(report_dict)
