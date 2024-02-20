@@ -20,11 +20,13 @@ class GetReport(Resource):
             abort(400, 'Invalid request_format or request_order value')
 
         drivers = Driver.select()
-        drivers = drivers.order_by(Driver.result_time.asc())
-        report_dict = {}
 
         if request_order == 'desc':
             drivers = drivers.order_by(Driver.result_time.desc())
+        else:
+            drivers = drivers.order_by(Driver.result_time.asc())
+
+        report_dict = {}
 
         for driver in drivers:
             report_dict[driver.id] = {

@@ -18,11 +18,16 @@ class TestGetReportApiCases:
         assert (b'{"SVF":{"name":"Sebastian Vettel",'
                 b'"team":"FERRARI","time":"0:01:04.415000"}}') in response.data
 
-    def test_get_report_order_desc(self, client, db):
+    def test_get_report_order(self, client, db):
+        response = client.get('/api/v1/report/?request_order=asc')
+        assert response.status_code == 200
+        assert (b'{"SVF": {"name": "Sebastian Vettel",'
+                b' "team": "FERRARI", "time": "0:01:04.415000"}}\n') in response.data
+
         response = client.get('/api/v1/report/?request_order=desc')
         assert response.status_code == 200
-        assert (b'{"SVF":{"name":"Sebastian Vettel",'
-                b'"team":"FERRARI","time":"0:01:04.415000"}}') in response.data
+        assert (b'{"SVF": {"name": "Sebastian Vettel",'
+                b' "team": "FERRARI", "time": "0:01:04.415000"}}\n') in response.data
 
     def test_get_report_format_xml(self, client, db):
         response = client.get('/api/v1/report/?request_format=xml')
